@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 320" preserveAspectRatio="none">
+  <defs>
+    <!-- pincelada de rolo: bordas irregulares + marcas suaves do rolo -->
+    <filter id="rolo" x="-4%" y="-25%" width="108%" height="150%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035 0.09" numOctaves="4" seed="11" result="ruido"/>
+      <feDisplacementMap in="SourceGraphic" in2="ruido" scale="22" xChannelSelector="R" yChannelSelector="G" result="borda"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.0018 0.045" numOctaves="2" seed="4" result="marcas"/>
+      <feColorMatrix in="marcas" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.9 0 0 0 0.55" result="alfa"/>
+      <feComposite in="borda" in2="alfa" operator="in"/>
+    </filter>
+  </defs>
+  <path filter="url(#rolo)" fill="#5895F5"
+        d="M38 62 C300 52 700 48 1040 40 L1360 34 L1366 270 C1000 278 600 284 300 288 L32 292 Z"/>
+</svg>
