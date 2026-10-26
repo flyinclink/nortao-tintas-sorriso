@@ -59,7 +59,9 @@ main{overflow:clip;position:relative;padding-bottom:96px}
 .rolo{position:absolute;z-index:2;pointer-events:none;background:url(img/rolo.svg) center/100% 100% no-repeat;opacity:.3;left:-5%;width:110%}
 section>*:not(.rolo){position:relative;z-index:3}
 .hero>.img{z-index:1}
-.hero .rolo{left:calc(-5% - var(--gutter));width:calc(110% + 2 * var(--gutter));height:195px;bottom:-92px;transform:rotate(-2deg)}
+/* faixa do hero: logo abaixo da prova social e por trás do filete (camada 0, abaixo da foto da lata).
+   o texto do hero é centralizado na vertical, então a faixa se ancora no meio do hero (prova social termina ~225px abaixo dele) */
+.hero .rolo{left:calc(-5% - var(--gutter));width:calc(110% + 2 * var(--gutter));height:195px;top:calc(50% + 163px);transform:rotate(-2deg);z-index:0}
 #marcas .rolo{height:273px;top:139px;transform:rotate(-1.5deg)}
 /* faixa diagonal: começa à esquerda na altura do topo do card e termina à direita no pé da seção */
 #localizacao .r2{left:-7.5%;width:115%;height:286px;top:459px;transform:rotate(13.66deg)}
@@ -207,7 +209,7 @@ footer .copy{grid-column:1/-1;margin-top:32px;padding-top:24px;border-top:1px so
   .hero .beneficios{grid-template-columns:repeat(2,1fr);row-gap:24px;margin-top:40px}
   .head{padding:64px var(--gutter) 28px}
   .brand{width:170px}
-  .hero .rolo{height:156px;bottom:-88px}
+  .hero .rolo{height:156px;top:auto;bottom:-88px}
   #marcas .rolo{height:195px;top:118px}
   #localizacao .r2{left:-12.5%;width:125%;height:234px;top:436px}
   .marquee .track{animation-duration:35s}
