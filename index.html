@@ -146,6 +146,28 @@ section>*:not(.rolo){position:relative;z-index:3}
 /* com "reduzir movimento" ligado (comum no modo economia de bateria) o carrossel continua andando, só que mais devagar */
 @media(prefers-reduced-motion:reduce){html .marquee .track{animation-duration:90s}}
 
+/* 2b. ENTREGA EXPRESSA: card branco (o filete passa por trás), caminhão à esquerda e headline à direita */
+#entrega{padding:72px var(--gutter) 0}
+.entrega{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:clamp(28px,4vw,64px);overflow:hidden;background:#fff;border:1px solid #e3e8f2;border-radius:32px;padding:clamp(28px,3.5vw,48px) clamp(24px,4vw,56px) clamp(28px,3.5vw,48px) clamp(24px,4vw,56px);box-shadow:0 30px 60px -36px #002f8740}
+.caminhao{position:relative;flex:none;width:clamp(250px,27vw,360px)}
+.caminhao svg{display:block;width:100%;height:auto;position:relative}
+/* traços soltos de velocidade: nascem colados nos rastros da carroceria e escorregam para trás sumindo */
+.caminhao .vel rect{animation:vel .9s linear infinite}
+.caminhao .vel rect:nth-child(2){animation-delay:-.3s}
+.caminhao .vel rect:nth-child(3){animation-delay:-.6s}
+@keyframes vel{0%{transform:translateX(70px);opacity:0}20%{opacity:1}100%{transform:translateX(-90px);opacity:0}}
+/* rodas girando e carroceria balançando de leve */
+.caminhao .roda{transform-box:fill-box;transform-origin:center;animation:roda .45s linear infinite}
+@keyframes roda{to{transform:rotate(360deg)}}
+.caminhao .carro{animation:balanca .35s ease-in-out infinite alternate}
+@keyframes balanca{to{transform:translateY(-8px)}}
+/* entrada: o caminhão chega pela esquerda quando a seção aparece na tela */
+.js .entrega .caminhao{transition:transform 1.6s var(--ease) .15s,opacity .5s .15s}
+.js .entrega:not(.in) .caminhao{transform:translateX(-160%);opacity:0}
+.entrega-txt{font-size:clamp(24px,2.3vw,36px);line-height:1.15;letter-spacing:-.03em;color:var(--navy);text-wrap:balance}
+.entrega-txt em{display:block;margin-top:12px;font-style:normal;color:#0b4cc2}
+@media(prefers-reduced-motion:reduce){.js .entrega:not(.in) .caminhao{transform:none;opacity:1}.caminhao .vel rect,.caminhao .roda,.caminhao .carro{animation:none}}
+
 /* 3. LOCALIZAÇÃO */
 .cat{position:relative;margin:0 var(--gutter);min-height:460px;display:grid;grid-template-columns:repeat(12,1fr);align-items:center}
 .cat .photo{grid-row:1;grid-column:4/13;min-height:460px;position:relative;overflow:hidden;background:repeating-linear-gradient(135deg,#eaf1ea 0 18px,#7fa88b 18px 26px,#eaf1ea 26px 44px,#4f7f64 44px 50px)}
@@ -213,6 +235,10 @@ footer .copy{grid-column:1/-1;margin-top:32px;padding-top:24px;border-top:1px so
   #marcas .rolo{height:195px;top:118px}
   #localizacao .r2{left:-12.5%;width:125%;height:234px;top:436px}
   .marquee .track{animation-duration:35s}
+  /* entrega: caminhão em cima, headline embaixo, tudo centralizado */
+  #entrega{padding-top:48px}
+  .entrega{flex-direction:column;text-align:center;gap:24px;border-radius:24px;padding:32px 22px 30px}
+  .caminhao{width:min(270px,80%)}
   .cat{display:flex;flex-direction:column;align-items:stretch;margin:0 var(--gutter)}
   .cat .photo{min-height:280px;order:-1}
   .cat .photo.fachada{min-height:0;height:auto;aspect-ratio:1/1;max-height:560px} /* no tablet não vira um quadrado do tamanho da tela */
@@ -290,6 +316,45 @@ footer .copy{grid-column:1/-1;margin-top:32px;padding-top:24px;border-top:1px so
   </div>
 </section>
 
+<!-- 2b. ENTREGA EXPRESSA — caminhão entra pela esquerda ao rolar até aqui -->
+<section id="entrega">
+  <div class="entrega">
+    <div class="caminhao" aria-hidden="true">
+      <svg viewBox="100 215 1485 585" fill="#05297F">
+        <defs>
+          <!-- vãos entre os rastros, para-lamas e janela recortados da carroceria -->
+          <mask id="recorte" maskUnits="userSpaceOnUse" x="100" y="215" width="1485" height="585">
+            <rect x="100" y="215" width="1485" height="585" fill="#fff"/>
+            <rect x="300" y="354" width="428" height="48" rx="24" fill="#000"/>
+            <rect x="300" y="457" width="355" height="45" rx="22" fill="#000"/>
+            <circle cx="702" cy="686" r="122" fill="#000"/>
+            <circle cx="1357" cy="686" r="122" fill="#000"/>
+            <path d="M1330 377H1420Q1430 377 1437 387L1488 465Q1494 481 1478 481H1330Q1314 481 1314 465V393Q1314 377 1330 377Z" fill="#000"/>
+          </mask>
+        </defs>
+        <ellipse cx="1047" cy="785" rx="520" ry="12" opacity=".1"/>
+        <g class="carro" mask="url(#recorte)">
+          <rect x="560" y="230" width="672" height="440" rx="45"/>
+          <rect x="472" y="299" width="140" height="55" rx="27"/>
+          <rect x="350" y="402" width="260" height="55" rx="27"/>
+          <rect x="448" y="502" width="160" height="54" rx="27"/>
+          <path d="M600 540V671H553Q520 668 527 632Q531 620 540 612L556 596Q575 575 548 556H560V540Z"/>
+          <path d="M1262 671V354Q1262 324 1292 324H1430Q1452 324 1465 343L1558 492Q1570 508 1570 525V645Q1570 671 1545 671Z"/>
+        </g>
+        <!-- traços soltos: saem de trás do caminhão e ficam para trás -->
+        <g class="vel">
+          <rect x="326" y="299" width="109" height="55" rx="27"/>
+          <rect x="215" y="402" width="93" height="55" rx="27"/>
+          <rect x="326" y="502" width="89" height="54" rx="27"/>
+        </g>
+        <g class="roda"><circle cx="702" cy="686" r="90"/><circle cx="702" cy="686" r="33" fill="#fff"/><rect x="694" y="606" width="16" height="22" rx="8" fill="#fff"/></g>
+        <g class="roda"><circle cx="1357" cy="686" r="90"/><circle cx="1357" cy="686" r="33" fill="#fff"/><rect x="1349" y="606" width="16" height="22" rx="8" fill="#fff"/></g>
+      </svg>
+    </div>
+    <h2 class="entrega-txt">Chega de deixar sua obra parada porque acabou a tinta. <em>A Nortão possui entrega expressa para você.</em></h2>
+  </div>
+</section>
+
 <!-- 3. LOCALIZAÇÃO -->
 <section id="localizacao">
   <span class="rolo r2" aria-hidden="true"></span>
@@ -331,7 +396,7 @@ document.querySelectorAll('[data-photo]').forEach(el=>{
 });
 /* entrada ao rolar */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
-document.querySelectorAll('.head,.cat,footer>div').forEach(el=>{el.classList.add('rv');io.observe(el)});
+document.querySelectorAll('.head,.entrega,.cat,footer>div').forEach(el=>{el.classList.add('rv');io.observe(el)});
 /* colunas do rodapé entram em cascata */
 document.querySelectorAll('footer>div').forEach((el,i)=>el.style.setProperty('--d',i*.08+'s'));
 /* carrossel de marcas: duplica a lista para o loop infinito */
