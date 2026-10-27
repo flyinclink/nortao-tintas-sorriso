@@ -298,19 +298,12 @@ footer .copy{grid-column:1/-1;margin-top:32px;padding-top:24px;border-top:1px so
   <div class="marquee" aria-label="Marcas que trabalhamos">
     <div class="track">
       <ul class="brands">
-        <li class="brand"><img src="img/marcas/coral.webp" alt="Logo Coral"></li>
-        <li class="brand"><img src="img/marcas/suvinil.webp" alt="Logo Suvinil"></li>
-        <li class="brand"><img src="img/marcas/sherwin-williams.webp" alt="Logo Sherwin-Williams"></li>
-        <li class="brand"><img src="img/marcas/eucatex.webp" alt="Logo Tintas Eucatex"></li>
-        <li class="brand"><img src="img/marcas/nortao-color.webp" alt="Logo Nortão Color"></li>
-        <li class="brand"><img src="img/marcas/maxvinil.webp" alt="Logo Tintas Maxvinil"></li>
-        <li class="brand"><img src="img/marcas/killing.webp" alt="Logo Tintas Killing"></li>
-        <li class="brand"><img src="img/marcas/sayerlack.webp" alt="Logo Sayerlack"></li>
-        <li class="brand"><img src="img/marcas/condor.webp" alt="Logo Condor"></li>
-        <li class="brand"><img src="img/marcas/bellacor.webp" alt="Logo Bellacor"></li>
-        <li class="brand"><img src="img/marcas/goldencor.webp" alt="Logo Goldencor Tintas"></li>
-        <li class="brand"><img src="img/marcas/hydronorth.webp" alt="Logo Hydronorth Tintas e Resinas"></li>
-        <li class="brand"><img src="img/marcas/salvabras.webp" alt="Logo Salvabras"></li>
+        <li class="brand"><img src="img/marcas/logo-suvinil.webp" alt="Logo Suvinil"></li>
+        <li class="brand"><img src="img/marcas/logo-sherwin-williams.webp" alt="Logo Sherwin-Williams"></li>
+        <li class="brand"><img src="img/marcas/logo-eucatex.webp" alt="Logo Tintas Eucatex"></li>
+        <li class="brand"><img src="img/marcas/logo-nortao-color.webp" alt="Logo Nortão Color"></li>
+        <li class="brand"><img src="img/marcas/logo-maxvinil.webp" alt="Logo Tintas Maxvinil"></li>
+        <li class="brand"><img src="img/marcas/logo-brasilux.png" alt="Logo Brasilux Tintas"></li>
       </ul>
     </div>
   </div>
@@ -399,9 +392,11 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 document.querySelectorAll('.head,.entrega,.cat,footer>div').forEach(el=>{el.classList.add('rv');io.observe(el)});
 /* colunas do rodapé entram em cascata */
 document.querySelectorAll('footer>div').forEach((el,i)=>el.style.setProperty('--d',i*.08+'s'));
-/* carrossel de marcas: duplica a lista para o loop infinito */
+/* carrossel de marcas: repete as marcas até a lista cobrir a tela e duplica a lista para o loop infinito */
 document.querySelectorAll('.marquee .track').forEach(t=>{
-  const c=t.querySelector('ul').cloneNode(true); c.setAttribute('aria-hidden','true'); t.appendChild(c);
+  const ul=t.querySelector('ul'), itens=[...ul.children], alvo=Math.max(screen.width,innerWidth);
+  for(let i=0;i<8&&ul.scrollWidth<alvo;i++)itens.forEach(li=>{const c=li.cloneNode(true);c.setAttribute('aria-hidden','true');ul.appendChild(c)});
+  const c=ul.cloneNode(true); c.setAttribute('aria-hidden','true'); t.appendChild(c);
 });
 document.querySelectorAll('.marquee').forEach(el=>{el.classList.add('rv');io.observe(el)});
 
